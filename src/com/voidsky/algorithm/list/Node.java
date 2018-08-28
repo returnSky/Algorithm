@@ -7,6 +7,7 @@ public class Node {
 	//头结点构造
 	public Node(Node next) {
 		this.next = next;
+		this.element = null;
 	}
 
 	//非头结点的构造

@@ -1,5 +1,7 @@
 package com.voidsky.algorithm.list;
 
+import java.util.Arrays;
+
 public class SequenceList implements MyList {
 	
 	private final int DEFAULT_LENGTH = 20;
@@ -15,13 +17,13 @@ public class SequenceList implements MyList {
 		this.initList(length);
 	}
 
-	public void initList(int length) {
+	private void initList(int length) {
 		this.length = 0;
 		this.maxSize = length;
 		this.array = new Object[maxSize];
 	}
 	
-	public void initList(Object[] objs) {
+	private void initList(Object[] objs) {
 		this.length = 0;
 		this.maxSize = objs.length;
 		this.array = objs;
@@ -49,7 +51,7 @@ public class SequenceList implements MyList {
 	 */
 	@Override
 	public Object getByIndex(int index) throws Exception {
-		if (this.length == 0 || index < 0 || index >= this.length) {
+		if (this.length == 0 || index < 0 || index > this.length) {
 			throw new RuntimeException("The paramter has error:" + index);
 		}
 		return this.array[index-1];
@@ -71,7 +73,7 @@ public class SequenceList implements MyList {
 			}
 		}
 		
-		this.array[index] = obj; //插入新元素
+		this.array[index-1] = obj; //插入新元素
 		this.length++;
 	}
 
@@ -86,7 +88,13 @@ public class SequenceList implements MyList {
 				this.array[i-1] = this.array[i];  //将删除位置后的数据元素向前移动一位
 			}
 		}
-		this.length--;
+		this.array[--this.length] = null;
 	}
 
+	@Override
+	public String toString() {
+		return "SequenceList [DEFAULT_LENGTH=" + DEFAULT_LENGTH + ", maxSize=" + maxSize + ", length=" + length
+				+ ", array=" + Arrays.toString(array) + "]";
+	}
+	
 }
