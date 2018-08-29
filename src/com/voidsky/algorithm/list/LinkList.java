@@ -9,8 +9,24 @@ public class LinkList implements MyList {
 	 * 构造带有头结点的空的链表
 	 */
 	public LinkList() {
-		this.head = new Node(null);
+		this.current = this.head = new Node(null);
 		this.length = 0;
+	}
+	
+	/**
+	 * 定位函数,寻找第index个结点
+	 * @param index
+	 */
+	private void indexNode(int index) {
+		if (index == 0) { //第一个数据元素结点的下标是0
+			return;
+		}
+		this.current = this.head.getNext();
+		int j = 1;
+		while (this.current!=null&&j<index) {
+			this.current = this.current.getNext();
+			j++;
+		}
 	}
 
 	@Override
@@ -53,18 +69,27 @@ public class LinkList implements MyList {
 		}
 	}
 
+	/**
+	 * 查找:O(n),插入:O(1)
+	 */
 	@Override
 	public void insert(Object obj, int index) throws Exception {
+//		if(index<0 || index>this.length+1) {  //检查index插入位置是否合法 [1,length+1]
+//			throw new RuntimeException("The paramter has error:" + index);
+//		}
+//		this.indexNode(index-1);  //[0,length]
+		
 		int j = 1;  //计数器
-		this.current = this.head.getNext();  //当前结点指向第一个结点
+		this.current = this.head;
 		while (this.current!=null && j < index) {  //寻找第 index-1 个结点 
 			this.current = this.current.getNext();
 			j++;
 		}
 		
-		if (this.current == null || j > index) {
+		if (this.current==null||j > index) {
 			throw new RuntimeException("The paramter has error:" + index);
 		}
+		
 		//生成结点,并且把第 index-1个结点所指向的结点赋值给该节点的 next
 		Node node = new Node(obj, this.current.getNext());
 		//把第 index-1个结点的后继结点指向新结点
@@ -72,16 +97,19 @@ public class LinkList implements MyList {
 		this.length++;
 	}
 
+	/**
+	 * 查找:O(n),删除:O(1)
+	 */
 	@Override
 	public void delete(int index) throws Exception {
 		int j = 1; //计数器
-		this.current = this.head.getNext(); //当前结点指向第一个结点
+		this.current = this.head;
 		while (this.current.getNext()!=null && j < index) {  //寻找第index-1个结点
 			this.current = this.current.getNext();
-			j++;
+			++j;
 		}
 		
-		if (this.current.getNext() == null || j > index) {
+		if (this.current == null || j > index) {
 			throw new RuntimeException("The paramter has error:" + index);
 		}
 		

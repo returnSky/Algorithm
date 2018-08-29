@@ -7,12 +7,10 @@ public class Node {
 	//头结点构造
 	public Node(Node next) {
 		this.next = next;
-		this.element = null;
 	}
 
 	//非头结点的构造
 	public Node(Object element, Node next) {
-		super();
 		this.element = element;
 		this.next = next;
 	}
